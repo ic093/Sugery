@@ -1,0 +1,172 @@
+.ami {
+  position: relative;
+  text-align: center;
+  overflow: hidden; /* 確保動畫不超出範圍 */
+  width: 100%;
+  /* height: 80vh; */
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.test {
+  font-size: 2rem;
+  color: white;
+  z-index: 2;
+  position: relative;
+}
+
+.line-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* height: 100%; */
+  z-index: 1;
+  /* pointer-events: none; */
+}
+
+.line {
+  position: absolute;
+  width: 2px;
+  height: 50px;
+  animation: fall 5s linear infinite;
+}
+
+.line:nth-child(1) {
+  left: 5%;
+  animation-duration: 8s;
+  animation-delay: -2s;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(0, 230, 250, 0.8)
+  );
+}
+.line:nth-child(2) {
+  left: 15%;
+  animation-duration: 6s;
+  animation-delay: -1s;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(0, 230, 250, 0.8)
+  );
+}
+.line:nth-child(3) {
+  left: 25%;
+  animation-duration: 7s;
+  animation-delay: -3s;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(0, 230, 250, 0.8)
+  );
+}
+.line:nth-child(4) {
+  left: 35%;
+  animation-duration: 9s;
+  animation-delay: -4s;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(0, 230, 250, 0.8)
+  );
+}
+.line:nth-child(5) {
+  left: 45%;
+  animation-duration: 10s;
+  animation-delay: -5s;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(0, 230, 250, 0.8)
+  );
+}
+.line:nth-child(6) {
+  left: 55%;
+  animation-duration: 6s;
+  animation-delay: -3s;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(0, 230, 250, 0.8)
+  );
+}
+.line:nth-child(7) {
+  left: 65%;
+  animation-duration: 8s;
+  animation-delay: -2s;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(0, 230, 250, 0.8)
+  );
+}
+.line:nth-child(8) {
+  left: 75%;
+  animation-duration: 7s;
+  animation-delay: -1s;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(0, 230, 250, 0.8)
+  );
+}
+.line:nth-child(9) {
+  left: 85%;
+  animation-duration: 9s;
+  animation-delay: -4s;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(0, 230, 250, 0.8)
+  );
+}
+.line:nth-child(10) {
+  left: 95%;
+  animation-duration: 10s;
+  animation-delay: -5s;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(0, 230, 250, 0.8)
+  );
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0); /* 初始位置 */
+  }
+  100% {
+    transform: translateY(100vh); /* 向下移動 */
+  }
+}
+@media (max-width: 576px) {
+  .ami {
+    height: 73vh;
+  }
+}
+@media (min-width: 577px) and (max-width: 768px) {
+  .ami {
+    height: 76vh;
+  }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  .ami {
+    height: 80vh;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .ami {
+    height: 75vh; /* 桌機：高度占螢幕的 85% */
+  }
+}
+
+@media (min-width: 1441px) {
+  .ami {
+    height: 80vh; /* 超大桌機：高度占螢幕的 90% */
+  }
+}

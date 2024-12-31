@@ -1,0 +1,40 @@
+.list-group li {
+  border: 1px solid black;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  border-radius: 10px;
+  background-color: #1a394a;
+  color: aliceblue;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  animation: float 2.5s ease-in-out infinite; /* 應用浮動動畫 */
+  transition: transform 0.3s ease; /* 平滑效果 */
+}
+.list-group {
+  display: flex;
+  gap: 10px;
+  list-style: none; /* 移除預設的項目符號 */
+  padding: 0; /* 移除預設的內邊距 */
+  width: 90%;
+}
+.list-group li:hover {
+  background-color: #fff7e9;
+  color: black;
+  transform: scale(1.1); /* 當懸停時放大 */
+}
+.test {
+  background-color: #1a394a;
+  height: 50vh;
+  /* 暫定 */
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+}
+.list-group li {
+  text-decoration: none;
+  color: aliceblue;
+}
+.list-group li a:hover {
+  color: black;
+}

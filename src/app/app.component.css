@@ -1,0 +1,16 @@
+.main-container {
+  display: flex; /* 使用 Flexbox */
+  /* height: 80vh; */
+}
+
+.dashboard {
+  width: 15%; /* 側邊欄固定寬度 */
+  background-color: #1a394a;
+  border-radius: 15px;
+}
+
+.content {
+  flex-grow: 1;
+  /* padding: 20px; */
+  background-color: antiquewhite;
+}

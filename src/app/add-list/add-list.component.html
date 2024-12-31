@@ -1,0 +1,110 @@
+<div class="container">
+  <div class="row center">
+    <div class="col-6 col-md-6 mt-5">
+      <label for="patientId" class="text">病歷號:</label>
+      <input
+        type="text"
+        id="patientId"
+        class="form-control mb-3"
+        placeholder="請輸入病歷號"
+        [(ngModel)]="formData.patientId"
+      />
+      <!-- 病患姓名 -->
+      <label for="patientName" class="text">病患姓名:</label>
+      <input
+        type="text"
+        id="patientName"
+        class="form-control mb-3"
+        placeholder="請輸入病患姓名"
+        [(ngModel)]="formData.patientName"
+      />
+      <!-- 科別 -->
+      <label for="speciality" class="text">科別:</label>
+      <select
+        id="speciality"
+        class="form-select space"
+        aria-label="Default select example"
+        *ngIf="specialities && specialities.length > 0"
+        (change)="onSpecialityChange()"
+        [(ngModel)]="formData.speciality"
+      >
+        <option value="" disabled selected>請選擇</option>
+        <option *ngFor="let speciality of specialities" [value]="speciality">
+          {{ speciality }}
+        </option>
+      </select>
+      <!-- 執刀醫師 -->
+      <label for="doctor" class="text">執刀醫師:</label>
+      <select
+        id="doctor"
+        class="form-select space"
+        aria-label="Default select example"
+        [disabled]="!doctors || doctors.length === 0"
+        [(ngModel)]="formData.doctor"
+      >
+        <option selected>請選擇</option>
+        <option *ngFor="let doctor of doctors" [value]="doctor.doctor">
+          {{ doctor.doctor }}
+        </option>
+      </select>
+      <!-- 麻醉科醫師 -->
+      <label for="Anesthesiologist" class="text">麻醉科醫師:</label>
+      <select
+        id="Anesthesiologist"
+        class="form-select space"
+        aria-label="Default select example"
+        [(ngModel)]="formData.Anesthesiologist"
+      >
+        <option selected>請選擇</option>
+        <option *ngFor="let Anesth of Anesthesiologist" [value]="Anesth">
+          {{ Anesth }}
+        </option>
+      </select>
+      <!-- 刷手護理師 -->
+      <label for="ScrubNurse" class="text">刷手護理師:</label>
+      <select
+        id="ScrubNurse"
+        class="form-select space"
+        aria-label="Default select example"
+        [(ngModel)]="formData.ScrubNurse"
+      >
+        <option selected>請選擇</option>
+        <option *ngFor="let scrubNurse of ScrubNurse" [value]="scrubNurse">
+          {{ scrubNurse }}
+        </option>
+      </select>
+      <!-- 術式 -->
+      <label for="procedure" class="text">術式:</label>
+      <input
+        type="text"
+        id="procedure"
+        class="form-control mb-3"
+        placeholder="請輸入術式"
+        [(ngModel)]="formData.procedure"
+      />
+      <!-- 預計開始手術時間 -->
+      <label for="StartTime" class="text">預計手術開始時間:</label>
+      <input
+        type="datetime-local"
+        id="StartTime"
+        class="form-control space"
+        aria-label="預計手術時間"
+        [(ngModel)]="formData.StartTime"
+      />
+      <!-- 預計手術結束時間 -->
+      <label for="EndTime" class="text">預計手術結束時間:</label>
+      <input
+        type="datetime-local"
+        id="EndTime"
+        class="form-control space"
+        aria-label="預計手術時間"
+        [(ngModel)]="formData.EndTime"
+      />
+      <div class="center mb-3">
+        <button type="button" class="btn btn-warning" (click)="submitFrom()">
+          確定新增
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
