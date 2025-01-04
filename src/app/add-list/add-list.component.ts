@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { OPService } from '../services/op.service';
 import { OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-add-list',
   standalone: false,
@@ -37,11 +37,11 @@ export class AddListComponent implements OnInit {
     });
     this.OPService.getAnesth().subscribe((data) => {
       this.Anesthesiologist = data;
-      console.log('麻醫', this.Anesthesiologist);
+      // console.log('麻醫', this.Anesthesiologist);
     });
     this.OPService.getScrubNurse().subscribe((data) => {
       this.ScrubNurse = data;
-      console.log('刷手', this.ScrubNurse);
+      // console.log('刷手', this.ScrubNurse);
     });
   }
   // 當科別發生改變時，根據選中的科別 (speciality) 從服務中取得對應的醫生資料，並更新元件的 doctors 屬性。如果沒有選擇科別，則清空醫生列表
@@ -84,7 +84,28 @@ export class AddListComponent implements OnInit {
     );
     this.formData.StartTime = formDataStartTime;
     this.formData.EndTime = formDataEndTime;
+    // 使用 OPService 新增資料
+    this.OPService.addSurgery({ ...this.formData });
 
-    localStorage.setItem('surgeryData', JSON.stringify(this.formData));
+    // 清空表單
+    this.formData = {
+      patientId: '',
+      patientName: '',
+      speciality: '',
+      doctor: '',
+      Anesthesiologist: '',
+      ScrubNurse: '',
+      procedure: '',
+      StartTime: '',
+      EndTime: '',
+    };
+
+    Swal.fire({
+      title: '新增成功',
+      text: '排程已新增成功',
+      icon: 'success',
+      confirmButtonText: '確定',
+      confirmButtonColor: '#3085d6', // 修改按鈕背景顏色
+    });
   }
 }

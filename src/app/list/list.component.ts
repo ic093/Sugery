@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
+import { OPService } from '../services/op.service';
 @Component({
   selector: 'app-list',
   standalone: false,
@@ -8,10 +9,12 @@ import { OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
   surgeryList: any[] = [];
+  constructor(private OPService: OPService) {}
+
   ngOnInit(): void {
-    const data = localStorage.getItem('surgeryData');
-    if (data) {
-      this.surgeryList = [JSON.parse(data)];
-    }
+    // 訂閱數據流，保持清單更新
+    this.OPService.surgeryList.subscribe((data) => {
+      this.surgeryList = data;
+    });
   }
 }

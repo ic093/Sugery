@@ -14,7 +14,14 @@ export class OPService {
   //   OPDate 的作用：
   // 將 BehaviorSubject 轉換為只讀的 Observable。
   // 讓其他元件可以通過訂閱 OPDate 來獲取資料更新。
-  constructor(public http: HttpClient) {}
+  private surgeryListSubject = new BehaviorSubject<any[]>([]); //管理內部數據
+  public surgeryList: Observable<any[]> =
+    this.surgeryListSubject.asObservable(); //Observable對外提供
+  constructor(public http: HttpClient) {
+    this.loadSurgeryData();
+    //這行程式碼呼叫了 loadSurgeryData() 方法。
+    //目的：在服務被建立時，立刻從 localStorage 中載入手術數據，並將其存入 surgeryListSubject。
+  }
   // fetchOPData負責從 /data.json 文件中獲取資料，並更新到 OPSubject 中。
   fetchOPData(): void {
     this.http.get<any>(this.url).subscribe({
@@ -103,5 +110,25 @@ export class OPService {
         return scrubNurse.map((item: any) => item.name);
       })
     );
+  }
+  // 手術數據管理
+  loadSurgeryData(): void {
+    //一開始不是先setItem，因為首次運行時，loadSurgeryData將localStorage的內容解析空陣列，利用這個空陣列為初始值傳給BehaviorSubject
+    //後續取數據時，取出已存入的內容，當應用再次加載時（例如重新整理頁面），localStorage 中已經有存入的數據。這種設計模式能確保應用在「無數據」和「有數據」兩種情況下都能正常運行，並且避免程式拋出錯誤
+    const data = JSON.parse(localStorage.getItem('surgeryData') || '[]');
+    //從localStorage中存在surgeryData的資料取出
+    this.surgeryListSubject.next(Array.isArray(data) ? data : []); //更新 BehaviorSubject，呼叫 next() 方法，將數據推送給所有訂閱此 BehaviorSubject 的訂閱者。確保所有使用這個數據的元件（或服務）能即時同步。
+    // loadSurgeryData()的功用為:從 localStorage 中載入手術數據,並將其存入 surgeryListSubject。
+  }
+  // 新增手術記錄，並將其同步更新到本地儲存和訂閱者。
+  addSurgery(data: any): void {
+    const currentList = this.surgeryListSubject.getValue(); //使用 BehaviorSubject 的 getValue() 方法，取得目前儲存的手術記錄清單。
+    // currentList 是目前的手術記錄陣列。
+    const updatedList = [...currentList, data]; //利用 展開運算符 (...) 創建一個新的陣列：將 currentList 的內容複製到新的陣列。
+    // 將新增的 data 附加到新陣列的末尾。不可變性（Immutability）：
+    // 不直接修改原始的 currentList，而是創建新的陣列。
+    // 避免意外修改原始資料結構，提升程式的安全性和可除錯性。
+    this.surgeryListSubject.next(updatedList); //更新 BehaviorSubject，將更新後的手術記錄清單推送給所有訂閱此 BehaviorSubject 的訂閱者。
+    localStorage.setItem('surgeryData', JSON.stringify(updatedList)); //將更新後的清單 updatedList 轉換為 JSON 格式的字串，並存入瀏覽器的 localStorage 中。
   }
 }
