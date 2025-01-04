@@ -31,7 +31,7 @@
             <td>{{ surgery.procedure }}</td>
             <td>{{ surgery.StartTime }}</td>
             <td>{{ surgery.EndTime }}</td>
-            <td><i class="bi bi-trash-fill"></i></td>
+            <td><i class="bi bi-trash-fill" (click)="deleteSurgery(i)"></i></td>
             <td><i class="bi bi-pencil-fill"></i></td>
           </tr>
           <tr>

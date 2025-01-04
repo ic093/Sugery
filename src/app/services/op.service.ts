@@ -124,11 +124,24 @@ export class OPService {
   addSurgery(data: any): void {
     const currentList = this.surgeryListSubject.getValue(); //使用 BehaviorSubject 的 getValue() 方法，取得目前儲存的手術記錄清單。
     // currentList 是目前的手術記錄陣列。
+    // 確保新增的資料包含 patientName
+
     const updatedList = [...currentList, data]; //利用 展開運算符 (...) 創建一個新的陣列：將 currentList 的內容複製到新的陣列。
     // 將新增的 data 附加到新陣列的末尾。不可變性（Immutability）：
     // 不直接修改原始的 currentList，而是創建新的陣列。
     // 避免意外修改原始資料結構，提升程式的安全性和可除錯性。
     this.surgeryListSubject.next(updatedList); //更新 BehaviorSubject，將更新後的手術記錄清單推送給所有訂閱此 BehaviorSubject 的訂閱者。
     localStorage.setItem('surgeryData', JSON.stringify(updatedList)); //將更新後的清單 updatedList 轉換為 JSON 格式的字串，並存入瀏覽器的 localStorage 中。
+  }
+
+  //刪除功能
+  deleteSurgery(data: number): void {
+    const currentList = this.surgeryListSubject.getValue();
+    currentList.splice(data, 1);
+    this.surgeryListSubject.next([...currentList]);
+    localStorage.setItem('surgeryData', JSON.stringify(currentList));
+  }
+  getSurgeryList(): any[] {
+    return this.surgeryListSubject.getValue();
   }
 }

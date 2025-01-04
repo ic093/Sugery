@@ -105,7 +105,7 @@ export class AddListComponent implements OnInit {
       text: '排程已新增成功',
       icon: 'success',
       confirmButtonText: '確定',
-      confirmButtonColor: '#3085d6', // 修改按鈕背景顏色
+      confirmButtonColor: '#1a394a', // 修改按鈕背景顏色
     });
   }
 }
