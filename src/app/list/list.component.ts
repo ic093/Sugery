@@ -27,9 +27,8 @@ export class ListComponent implements OnInit {
     const patientName = currentList[index]?.patientName || '此筆資料';
     console.log('病患', currentList[index]?.patientName);
     Swal.fire({
-      title: `確定要刪除病歷號為${patientId}嗎?`,
+      html: `<h2>確定要刪除<span style="color: red;">病歷號為 ${patientId}</span> 嗎?</h2><p>確定刪除 <span style="color: red;">病患姓名: ${patientName} </span> 這筆資料嗎?</p>`,
       icon: 'warning',
-      text: `確定刪除 ${patientName} 嗎?`,
       showCancelButton: true, // 顯示取消按鈕
       confirmButtonColor: '#d33', // 確認按鈕顏色
       cancelButtonColor: '#3085d6', // 取消按鈕顏色
