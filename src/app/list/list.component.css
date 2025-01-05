@@ -5,7 +5,14 @@
 }
 .bi-trash-fill {
   color: brown;
+  cursor: pointer;
+  font-size: 20px;
+}
+.bi-trash-fill:hover {
+  color: tomato;
 }
 .bi-pencil-fill {
   color: rgb(145, 145, 74);
+  cursor: pointer;
+  font-size: 20px;
 }

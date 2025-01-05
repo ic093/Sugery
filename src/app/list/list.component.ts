@@ -24,9 +24,12 @@ export class ListComponent implements OnInit {
   deleteSurgery(index: number): void {
     const currentList = this.OPService.getSurgeryList();
     const patientId = currentList[index]?.patientId || '此筆資料';
+    const patientName = currentList[index]?.patientName || '此筆資料';
+    console.log('病患', currentList[index]?.patientName);
     Swal.fire({
       title: `確定要刪除病歷號為${patientId}嗎?`,
       icon: 'warning',
+      text: `確定刪除 ${patientName} 嗎?`,
       showCancelButton: true, // 顯示取消按鈕
       confirmButtonColor: '#d33', // 確認按鈕顏色
       cancelButtonColor: '#3085d6', // 取消按鈕顏色
