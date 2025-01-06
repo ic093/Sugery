@@ -21,8 +21,7 @@ export class ListComponent implements OnInit {
       this.surgeryList = data;
       console.log('測試surgeryList', this.surgeryList);
     });
-    // 取得路由中的 `speciality` 查詢參數
-
+    // 取得路由中的 `speciality` 查詢參數，
     this.route.queryParamMap.subscribe((params) => {
       this.speciality = params.get('speciality') || '';
       if (this.speciality) {
@@ -51,7 +50,7 @@ export class ListComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         const OpenImdex = this.OPService.getSurgeryList().findIndex(
-          (item) => item.patientId === surgery.patientId
+          (item) => item.patientId === surgery.patientId //比較每個記錄的 patientId 是否與當前清單中被點擊刪除的 patientId 相同。
         );
         if (OpenImdex !== -1) {
           this.OPService.deleteSurgery(OpenImdex);

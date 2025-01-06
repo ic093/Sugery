@@ -134,6 +134,10 @@ export class OPService {
     localStorage.setItem('surgeryData', JSON.stringify(updatedList)); //將更新後的清單 updatedList 轉換為 JSON 格式的字串，並存入瀏覽器的 localStorage 中。
   }
 
+  getSurgeryList(): any[] {
+    return this.surgeryListSubject.getValue();
+  }
+
   //刪除功能
   deleteSurgery(data: number): void {
     const currentList = this.surgeryListSubject.getValue();
@@ -141,10 +145,7 @@ export class OPService {
     this.surgeryListSubject.next([...currentList]);
     localStorage.setItem('surgeryData', JSON.stringify(currentList));
   }
-  getSurgeryList(): any[] {
-    return this.surgeryListSubject.getValue();
-  }
-
+  //根據選定的科別，filter出對應的手術清單
   getSurgeryBySpecialty(speciality: string): Observable<any[]> {
     return this.surgeryList.pipe(
       map((data) => data.filter((item) => item.speciality === speciality))

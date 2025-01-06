@@ -20,9 +20,9 @@ export class DashbordComponent implements OnInit {
     });
   }
   // 點擊科別，使用路由導航到列表頁
-  goToList(speciality: string): void {
-    this.router.navigate(['/list'], {
-      queryParams: { speciality },
-    });
-  }
+  // goToList(speciality: string): void {
+  //   this.router.navigate(['/list'], {
+  //     queryParams: { speciality },
+  //   });
+  // }
 }
