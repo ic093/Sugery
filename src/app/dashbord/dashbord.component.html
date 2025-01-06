@@ -3,7 +3,11 @@
     <div class="col-12 col-md-12">
       <div class="test">
         <ul class="list-group d-flex mt-4">
-          <li *ngFor="let speciality of specialities" [routerLink]="['/list']">
+          <li
+            *ngFor="let speciality of specialities"
+            [routerLink]="['/list']"
+            [queryParams]="{ speciality }"
+          >
             {{ speciality }}
           </li>
         </ul>

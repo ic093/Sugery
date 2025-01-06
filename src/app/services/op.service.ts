@@ -144,4 +144,10 @@ export class OPService {
   getSurgeryList(): any[] {
     return this.surgeryListSubject.getValue();
   }
+
+  getSurgeryBySpecialty(speciality: string): Observable<any[]> {
+    return this.surgeryList.pipe(
+      map((data) => data.filter((item) => item.speciality === speciality))
+    );
+  }
 }
