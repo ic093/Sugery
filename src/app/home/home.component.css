@@ -3,7 +3,7 @@
   text-align: center;
   overflow: hidden; /* 確保動畫不超出範圍 */
   width: 100%;
-  /* height: 80vh; */
+  /* height: 100vh; */
   background-color: #000;
   display: flex;
   justify-content: center;
@@ -161,12 +161,12 @@
 
 @media (min-width: 1025px) and (max-width: 1440px) {
   .ami {
-    height: 75vh; /* 桌機：高度占螢幕的 85% */
+    height: 100vh; /* 桌機：高度占螢幕的 85% */
   }
 }
 
 @media (min-width: 1441px) {
   .ami {
-    height: 80vh; /* 超大桌機：高度占螢幕的 90% */
+    height: 100vh; /* 超大桌機：高度占螢幕的 90% */
   }
 }

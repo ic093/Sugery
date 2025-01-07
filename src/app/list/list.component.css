@@ -16,3 +16,7 @@
   cursor: pointer;
   font-size: 20px;
 }
+.paginate ::ng-deep .current {
+  background-color: #1a394a;
+  border-radius: 5px;
+}

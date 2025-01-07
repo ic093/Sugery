@@ -12,8 +12,8 @@ import { ActivatedRoute } from '@angular/router';
 export class ListComponent implements OnInit {
   surgeryList: any[] = [];
   speciality: string = '';
-  currentPage: number = 1; // 當前頁數
-  itemsPerPage: number = 5; // 每頁顯示的項目數量
+  currentPage: number = 1; // 當前的頁數
+  itemsPerPage: number = 5; // 每頁顯示有幾筆
 
   constructor(private OPService: OPService, private route: ActivatedRoute) {}
 
