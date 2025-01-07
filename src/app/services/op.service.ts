@@ -162,4 +162,17 @@ export class OPService {
       localStorage.setItem('surgeryData', JSON.stringify(currentList)); //更新localStorage
     }
   }
+  searchKeyword(query: string): void {
+    const currentList = JSON.parse(localStorage.getItem('surgeryData') || '[]');
+    if (query) {
+      const keyWord = currentList.filter((item: any) =>
+        ['patientId', 'patientName', 'speciality', 'doctor'].some((key) =>
+          item[key].toLowerCase().includes(query.toLowerCase())
+        )
+      );
+      this.surgeryListSubject.next(keyWord);
+    } else {
+      this.surgeryListSubject.next(currentList);
+    }
+  }
 }

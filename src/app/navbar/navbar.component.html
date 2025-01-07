@@ -10,8 +10,14 @@
               type="search"
               placeholder="Search"
               aria-label="Search"
+              name="searchInput"
+              [(ngModel)]="searchKeyword"
             />
-            <button class="btn btn-outline-success" type="submit">
+            <button
+              class="btn btn-outline-success"
+              type="submit"
+              (click)="search()"
+            >
               Search
             </button>
           </form>

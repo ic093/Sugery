@@ -13,10 +13,10 @@
   flex-grow: 1;
   /* padding: 20px; */
   background-color: antiquewhite;
-  height: 80vh;
+  height: 100vh;
 }
 @media (max-width: 768px) {
   .content {
-    height: 200vh;
+    height: 80vh;
   }
 }

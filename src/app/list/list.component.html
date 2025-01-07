@@ -5,23 +5,30 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">病歷號</th>
+            <th scope="col">序號</th>
+            <th scope="col">病歷號碼</th>
             <th scope="col">病患姓名</th>
             <th scope="col">科別</th>
             <th scope="col">執刀醫師</th>
-            <th scope="col">麻醉科醫師</th>
+            <th scope="col">麻醉醫師</th>
             <th scope="col">刷手護理師</th>
             <th scope="col">術式</th>
-            <th scope="col">手術開始時間</th>
-            <th scope="col">手術結束時間</th>
+            <th scope="col">手術開始</th>
+            <th scope="col">手術結束</th>
             <th scope="col">刪除</th>
             <th scope="col">修改</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let surgery of surgeryList; let i = index">
-            <th scope="row">{{ i + 1 }}</th>
+          <tr
+            *ngFor="
+              let surgery of surgeryList
+                | paginate
+                  : { itemsPerPage: itemsPerPage, currentPage: currentPage };
+              let i = index
+            "
+          >
+            <th scope="row">{{ i + 1 + (currentPage - 1) * itemsPerPage }}</th>
             <td>{{ surgery.patientId }}</td>
             <td>{{ surgery.patientName }}</td>
             <td>{{ surgery.speciality }}</td>
@@ -41,6 +48,15 @@
           </tr>
         </tbody>
       </table>
+      <!-- 分頁控制 -->
+      <pagination-controls
+        (pageChange)="currentPage = $event"
+        previousLabel="上一頁"
+        nextLabel="下一頁"
+        [maxSize]="5"
+        [autoHide]="true"
+        class="text"
+      ></pagination-controls>
     </div>
   </div>
 </div>
