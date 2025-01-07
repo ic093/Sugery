@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EditListComponent } from './edit-list/edit-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HomeComponent,
     AddListComponent,
     ListComponent,
+    EditListComponent,
   ],
   imports: [
     BrowserModule,

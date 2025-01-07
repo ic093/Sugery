@@ -151,4 +151,15 @@ export class OPService {
       map((data) => data.filter((item) => item.speciality === speciality))
     );
   }
+  updateSurgery(updatedData: any): void {
+    const currentList = this.surgeryListSubject.getValue();
+    const index = currentList.findIndex(
+      (item) => item.patientId === updatedData.patientId
+    );
+    if (index !== -1) {
+      currentList[index] = updatedData; //更新數據
+      this.surgeryListSubject.next([...currentList]); //推回更新
+      localStorage.setItem('surgeryData', JSON.stringify(currentList)); //更新localStorage
+    }
+  }
 }

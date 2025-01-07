@@ -16,7 +16,7 @@
   gap: 10px;
   list-style: none; /* 移除預設的項目符號 */
   padding: 0; /* 移除預設的內邊距 */
-  width: 90%;
+  /* width: 90%; */
 }
 .list-group li:hover {
   background-color: #fff7e9;
@@ -37,4 +37,12 @@
 }
 .list-group li a:hover {
   color: black;
+}
+.list-group li {
+  font-size: 18px;
+}
+@media (max-width: 768px) {
+  .list-group li {
+    font-size: 10px;
+  }
 }

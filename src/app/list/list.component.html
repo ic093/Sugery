@@ -16,7 +16,7 @@
             <th scope="col">手術開始時間</th>
             <th scope="col">手術結束時間</th>
             <th scope="col">刪除</th>
-            <th scope="col">更改</th>
+            <th scope="col">修改</th>
           </tr>
         </thead>
         <tbody>
@@ -32,7 +32,12 @@
             <td>{{ surgery.StartTime }}</td>
             <td>{{ surgery.EndTime }}</td>
             <td><i class="bi bi-trash-fill" (click)="deleteSurgery(i)"></i></td>
-            <td><i class="bi bi-pencil-fill"></i></td>
+            <td>
+              <i
+                class="bi bi-pencil-fill"
+                [routerLink]="['/editlist', surgery.patientId]"
+              ></i>
+            </td>
           </tr>
         </tbody>
       </table>
