@@ -23,7 +23,7 @@ export class ListComponent implements OnInit {
       this.surgeryList = data;
       console.log('測試surgeryList', this.surgeryList);
     });
-    // 取得路由中的 `speciality` 查詢參數，
+    // 取得路由中的 `speciality` 查詢參數， 科別歸類
     this.route.queryParamMap.subscribe((params) => {
       this.speciality = params.get('speciality') || '';
       if (this.speciality) {

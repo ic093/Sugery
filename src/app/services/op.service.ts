@@ -8,38 +8,35 @@ import { map } from 'rxjs/operators';
 })
 export class OPService {
   public url = '/data.json';
-
   private OPSubject = new BehaviorSubject<any>(null);
   public OPDate = this.OPSubject.asObservable();
   //   OPDate 的作用：
   // 將 BehaviorSubject 轉換為只讀的 Observable。
   // 讓其他元件可以通過訂閱 OPDate 來獲取資料更新。
-  private surgeryListSubject = new BehaviorSubject<any[]>([]); //管理內部數據
-  public surgeryList: Observable<any[]> =
-    this.surgeryListSubject.asObservable(); //Observable對外提供
+
+  private surgeryListSubject = new BehaviorSubject<any[]>([]);
+  public surgeryList = this.surgeryListSubject.asObservable(); // 手術清單
   constructor(public http: HttpClient) {
     this.loadSurgeryData();
-    //這行程式碼呼叫了 loadSurgeryData() 方法。
-    //目的：在服務被建立時，立刻從 localStorage 中載入手術數據，並將其存入 surgeryListSubject。
   }
   // fetchOPData負責從 /data.json 文件中獲取資料，並更新到 OPSubject 中。
   fetchOPData(): void {
     this.http.get<any>(this.url).subscribe({
       next: (data) => {
-        console.log('Fetched Data:', data); // 檢查是否成功獲取資料
-        this.OPSubject.next(data); // 更新 BehaviorSubject，將獲取的資料通過 BehaviorSubject 傳播給所有訂閱者，觸發更新。
+        console.log('Fetched Data:', data);
+        this.OPSubject.next(data);
       },
-
       error: (err) => {
-        console.error('Error fetching data:', err); // 捕捉錯誤
+        console.error('Error fetching data:', err);
       },
     });
   }
-  //提供一個街口，可以訂閱
-  // 保護 BehaviorSubject，不允許元件直接修改其值，只能通過 Observable 訂閱。元件或服務可以調用此方法訂閱資料流，而不直接接觸 BehaviorSubject。
   getOPData(): Observable<any> {
+    //給予一個變數，保護BehaviorSubject不被直接修改。
+    //並返回OPDate
     return this.OPDate;
   }
+
   // 提取所有醫生的科別 (speciality)，並移除重複的科別
   getAllSpeciality(): Observable<string[]> {
     return this.OPDate.pipe(
@@ -58,7 +55,7 @@ export class OPService {
       })
     );
   }
-  // 根據給定的科別（Speciality），從醫師數據中篩選出符合該科別的醫師，並返回這些醫師的名字和科別的 Observable。
+  //根據科別（Speciality）篩選出符合條件的醫師，並返回一個包含醫師名稱和科別的陣列
   getDoctorBySpeciality(
     Speciality: string
   ): Observable<{ doctor: string; speciality: string }[]> {
@@ -85,7 +82,7 @@ export class OPService {
           !data.Anesthesiologist ||
           !Array.isArray(data.Anesthesiologist)
         ) {
-          console.log('NO Anesthesiologist');
+          console.log('沒有抓到麻醫資料 ');
           return [];
         }
         const Anesth = data.Anesthesiologist;
@@ -106,32 +103,25 @@ export class OPService {
           return [];
         }
         const scrubNurse = data['scrub nurse'];
-        console.log('Scrub Nurse Data:', scrubNurse); // 調試輸出
+        console.log('Scrub Nurse Data:', scrubNurse);
         return scrubNurse.map((item: any) => item.name);
       })
     );
   }
-  // 手術數據管理
+
   loadSurgeryData(): void {
-    //一開始不是先setItem，因為首次運行時，loadSurgeryData將localStorage的內容解析空陣列，利用這個空陣列為初始值傳給BehaviorSubject
-    //後續取數據時，取出已存入的內容，當應用再次加載時（例如重新整理頁面），localStorage 中已經有存入的數據。這種設計模式能確保應用在「無數據」和「有數據」兩種情況下都能正常運行，並且避免程式拋出錯誤
     const data = JSON.parse(localStorage.getItem('surgeryData') || '[]');
     //從localStorage中存在surgeryData的資料取出
-    this.surgeryListSubject.next(Array.isArray(data) ? data : []); //更新 BehaviorSubject，呼叫 next() 方法，將數據推送給所有訂閱此 BehaviorSubject 的訂閱者。確保所有使用這個數據的元件（或服務）能即時同步。
-    // loadSurgeryData()的功用為:從 localStorage 中載入手術數據,並將其存入 surgeryListSubject。
+    this.surgeryListSubject.next(Array.isArray(data) ? data : []);
   }
-  // 新增手術記錄，並將其同步更新到本地儲存和訂閱者。
-  addSurgery(data: any): void {
-    const currentList = this.surgeryListSubject.getValue(); //使用 BehaviorSubject 的 getValue() 方法，取得目前儲存的手術記錄清單。
-    // currentList 是目前的手術記錄陣列。
-    // 確保新增的資料包含 patientName
 
-    const updatedList = [...currentList, data]; //利用 展開運算符 (...) 創建一個新的陣列：將 currentList 的內容複製到新的陣列。
-    // 將新增的 data 附加到新陣列的末尾。不可變性（Immutability）：
-    // 不直接修改原始的 currentList，而是創建新的陣列。
-    // 避免意外修改原始資料結構，提升程式的安全性和可除錯性。
-    this.surgeryListSubject.next(updatedList); //更新 BehaviorSubject，將更新後的手術記錄清單推送給所有訂閱此 BehaviorSubject 的訂閱者。
-    localStorage.setItem('surgeryData', JSON.stringify(updatedList)); //將更新後的清單 updatedList 轉換為 JSON 格式的字串，並存入瀏覽器的 localStorage 中。
+  // 新增手術記錄。
+  addSurgery(data: any): void {
+    const currentList = this.surgeryListSubject.getValue();
+    //currentList 為目前的手術記錄陣列。
+    const updatedList = [...currentList, data];
+    this.surgeryListSubject.next(updatedList);
+    localStorage.setItem('surgeryData', JSON.stringify(updatedList));
   }
 
   getSurgeryList(): any[] {
@@ -151,6 +141,7 @@ export class OPService {
       map((data) => data.filter((item) => item.speciality === speciality))
     );
   }
+  // 編輯
   updateSurgery(updatedData: any): void {
     const currentList = this.surgeryListSubject.getValue();
     const index = currentList.findIndex(
